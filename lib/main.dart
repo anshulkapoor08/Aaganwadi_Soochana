@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Jan Suvidha',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         primarySwatch: Colors.blue,
       ),
       home: const SplashScreen(),

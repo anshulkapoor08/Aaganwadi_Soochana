@@ -13,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late final AnimationController controller = AnimationController(
-    duration: const Duration(seconds: 3),
+    duration: const Duration(seconds: 4),
     vsync: this,
   )..repeat();
 
@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
    
     super.initState();
-    Timer(const Duration(seconds: 6), () {
+    Timer(const Duration(seconds: 3), () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const GetStarted()),
@@ -50,12 +50,12 @@ class _SplashScreenState extends State<SplashScreen>
                     height: 300,
                     width: 300,
                     child: const Center(
-                      child: Image(image: AssetImage('images/agwdr.png')),
+                      child: Image(image: AssetImage('images/agnr.png')),
                     ),
                   ),
                   builder: (BuildContext context, Widget? child) {
-                    return Transform.rotate(
-                      angle: controller.value * 2.0 * math.pi,
+                    return Transform.scale(
+                      scale: 1.0 + (controller.value * 0.5), 
                       child: child,
                     );
                   }),
