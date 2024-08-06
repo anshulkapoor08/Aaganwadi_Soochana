@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:aaganwadi_soochna/View/homepage.dart';
+import 'package:aaganwadi_soochna/Screens/namePage.dart';
+import 'package:aaganwadi_soochna/Widgets/button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class ImageCarouselSlider extends StatefulWidget {
 class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
   final List<String> imgList = [
     'images/Medicines.png',
-    'images/NobodyHome.png',
+    'images/yoga.png',
     'images/Delivery.png',
   ];
 
@@ -52,42 +53,41 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
     return Padding(
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).size.height * 0.1,
-          bottom: MediaQuery.of(context).size.height * 0.1),
+          bottom: 50),
       child: Column(
         children: [
-          const Text('Aaganwadi India',
-          textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Gilroy',
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF333333),
-                  ),
-                  ),
-
-                SizedBox(height:5.0 ),
-                  const Text('Empowering Communities',
-          textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Gilroy',
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.w200,
-                  color: Color(0xFF333333),
-                  ),
-                  ),
-                  
-
-          Container(
+          const Text(
+            'Aaganwadi India',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 32.0,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF333333),
+            ),
+          ),
+          const SizedBox(height: 5.0),
+          const Text(
+            'Empowering Communities',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Gilroy',
+              fontSize: 25.0,
+              fontWeight: FontWeight.w200,
+              color: Color(0xFF333333),
+            ),
+          ),
+          Expanded(
             child: Center(
               child: CarouselSlider(
                 options: CarouselOptions(
+                  height: 400.0,
+                  viewportFraction: 1.0,
                   initialPage: 0,
-                  
-                  
                   autoPlay: true,
                   autoPlayInterval: Duration(seconds: 3),
                   autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  viewportFraction: 1.0,
+                  
                   onPageChanged: (value, _) {
                     setState(() {
                       _currentPage = value;
@@ -107,30 +107,28 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
               ),
             ),
           ),
-          SizedBox(height: 30.0),
+          //SizedBox(height: 10.0),
           buildCarouselIndicator(),
+          
           Padding(
             padding:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyHomePage()),
-                );
+                EdgeInsets.only(top: 80),
+            child: RoundButton(
+              title: 'Login',
+              onTap: () {
+                
               },
-              child: Text('Get Started'),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                padding: EdgeInsets.only(left: 50.0, right: 50.0),
-              ),
             ),
           ),
-        ],
+          const SizedBox(height: 20),
+          TextButton(
+            onPressed: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyHomePage()),
+                );
+            }, child: const Text('Sign Up', style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Gilroy', fontWeight: FontWeight.bold),),)
+        ], 
       ),
     );
   }
