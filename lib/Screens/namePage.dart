@@ -2,7 +2,7 @@ import 'package:aaganwadi_soochna/Screens/mobileNumpage.dart';
 import 'package:aaganwadi_soochna/Widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NamePage()),
+                      MaterialPageRoute(builder: (context) => NamePage(name: nameController.text)),
                     );
                   },
                 ),

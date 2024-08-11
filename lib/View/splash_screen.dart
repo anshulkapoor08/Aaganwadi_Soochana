@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:aaganwadi_soochna/Screens/onboardingPage.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

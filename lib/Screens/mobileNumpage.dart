@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class NamePage extends StatefulWidget {
-  const NamePage({super.key});
+  final String name;
+  const NamePage({ required this.name});
 
   @override
   State<NamePage> createState() => _NamePageState();
@@ -14,10 +15,11 @@ class _NamePageState extends State<NamePage> {
   final _formKey = GlobalKey<FormState>();
   final numController = TextEditingController();
 
-   @override
+  @override
   void initState() {
     super.initState();
     numController.text = '+91 '; // Prepopulate with +91
+    print(widget.name);
   }
 
   @override
@@ -25,9 +27,10 @@ class _NamePageState extends State<NamePage> {
     numController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
     ));
@@ -70,15 +73,14 @@ class _NamePageState extends State<NamePage> {
                 child: Column(
                   children: [
                     TextFormField(
-                     keyboardType: TextInputType.phone,
-              
-              decoration: const InputDecoration(
-                prefixText: '+91 ',
-                labelText: 'Phone Number',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                ),
-              ),
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        prefixText: '+91 ',
+                        labelText: 'Phone Number',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -96,7 +98,8 @@ class _NamePageState extends State<NamePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const MyHomePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const MyHomePage()),
                     );
                   },
                 ),
@@ -106,6 +109,5 @@ class _NamePageState extends State<NamePage> {
         ),
       ),
     );
-  
   }
 }
