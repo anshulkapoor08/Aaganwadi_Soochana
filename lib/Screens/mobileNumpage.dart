@@ -1,11 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:aaganwadi_soochna/Screens/homepage.dart';
+import 'package:aaganwadi_soochna/View/secureStorage.dart';
 import 'package:aaganwadi_soochna/Widgets/button.dart';
+import 'package:aaganwadi_soochna/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class NamePage extends StatefulWidget {
   final String name;
-  const NamePage({ required this.name});
+  const NamePage({required this.name});
 
   @override
   State<NamePage> createState() => _NamePageState();
@@ -14,11 +20,10 @@ class NamePage extends StatefulWidget {
 class _NamePageState extends State<NamePage> {
   final _formKey = GlobalKey<FormState>();
   final numController = TextEditingController();
-
+  var error = '';
   @override
   void initState() {
-    super.initState();
-    numController.text = '+91 '; // Prepopulate with +91
+    super.initState(); // Prepopulate with +91
     print(widget.name);
   }
 
@@ -74,6 +79,7 @@ class _NamePageState extends State<NamePage> {
                   children: [
                     TextFormField(
                       keyboardType: TextInputType.phone,
+                      controller: numController,
                       decoration: const InputDecoration(
                         prefixText: '+91 ',
                         labelText: 'Phone Number',
@@ -89,18 +95,47 @@ class _NamePageState extends State<NamePage> {
             const SizedBox(
               height: 10,
             ),
+            Text(error),
+            const SizedBox(
+              height: 10,
+            ),
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: RoundButton(
                   title: 'Next',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyHomePage()),
-                    );
+                  onTap: () async {
+                    var payerid;
+
+                    await SecureStorageService()
+                        .readValue('playerId')
+                        .then((value) {
+                      log('Player ID received from storage: $value');
+                      payerid = value;
+                    });
+
+                    var res = await sendPlayerIdToBackend(
+                        payerid, widget.name, '+91' + numController.text);
+                    res = jsonDecode(res);
+                    if (res['status'] == 'success' && res['error'] == false) {
+                      log('Player ID sent to backend');
+                      var successwrite = await SecureStorageService()
+                          .writeValue('authToken', res['data']['authToken']);
+                      if (successwrite) {
+                        showSnackBar(context, 'successful signup',function: (){},label: 'get');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage()),
+                        );
+                      }
+                    } else {
+                      error = res['message'];
+                      setState(() {});
+                      showSnackBar(context, 'signup failed');
+                      log('Failed to send Player ID to backend');
+                    }
                   },
                 ),
               ),
@@ -110,4 +145,25 @@ class _NamePageState extends State<NamePage> {
       ),
     );
   }
+}
+
+dynamic sendPlayerIdToBackend(
+    String playerId, String name, String number) async {
+  log('Sending Player ID to backend');
+  final response = await http.post(
+    Uri.parse('https://anganwaadi-service-api.vercel.app/api/v1/client/signup'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      'name': name,
+      'phoneNumber': number,
+      'deviceId': playerId,
+    }),
+  );
+
+  log('Response status: ${response.statusCode}');
+  log('message: ${response.body}');
+
+  return response.body;
 }
