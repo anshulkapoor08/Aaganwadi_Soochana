@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MyNamePage extends StatefulWidget {
+  const MyNamePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyNamePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyNamePage> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
 
@@ -72,6 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                       ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'This field cannot be empty';
+                        }
+                        return null;
+                      },
                     ),
                   ],
                 ),
@@ -87,10 +93,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: RoundButton(
                   title: 'Next',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NamePage(name: nameController.text)),
-                    );
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              MyNumPage(name: nameController.text),
+                        ),
+                      );
+                    } else {
+                      
+                    }
                   },
                 ),
               ),

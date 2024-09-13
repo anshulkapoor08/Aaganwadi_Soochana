@@ -125,7 +125,7 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
             onPressed: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MyHomePage()),
+                  MaterialPageRoute(builder: (context) => const MyNamePage()),
                 );
             }, child: const Text('Sign Up', style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Gilroy', fontWeight: FontWeight.bold),),)
         ], 
