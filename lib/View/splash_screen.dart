@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:aaganwadi_soochna/Screens/onboardingPage.dart';
+import 'package:aaganwadi_soochna/View/authValidator.dart';
 import 'package:flutter/material.dart';
 
 
@@ -22,9 +23,9 @@ class _SplashScreenState extends State<SplashScreen>
    
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const GetStarted()),
+        MaterialPageRoute(builder: (context) => Validate()),
       );
     });
   }

@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyNamePage> {
           },
         ),
       ),
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.start,

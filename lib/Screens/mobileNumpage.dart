@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:aaganwadi_soochna/Screens/homepage.dart';
 import 'package:aaganwadi_soochna/View/secureStorage.dart';
 import 'package:aaganwadi_soochna/Widgets/button.dart';
-import 'package:aaganwadi_soochna/main.dart';
+import 'package:aaganwadi_soochna/utilities/showSnackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -106,9 +106,8 @@ class _NamePageState extends State<MyNumPage> {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: RoundButton(
+                child: !_isLoading ? RoundButton(
                   title: 'Next',
-                  
                   onTap: () async {
                     // Validate the form
                     if (_formKey.currentState!.validate()) {
@@ -117,50 +116,62 @@ class _NamePageState extends State<MyNumPage> {
                       });
 
                       // If valid, proceed with the backend request
-                      var payerid;
-                      await SecureStorageService()
-                          .readValue('playerId')
-                          .then((value) {
-                        log('Player ID received from storage: $value');
-                        payerid = value;
-                      });
-                      var res = await sendPlayerIdToBackend(
-                          payerid, widget.name, '+91' + numController.text);
-                      res = jsonDecode(res);
+                      var payerid =
+                          await SecureStorageService().readValue('playerId');
+                      log('Player ID received from storage: $payerid');
 
-                      if (res['status'] == 'success' && res['error'] == false) {
-                        log('Player ID sent to backend');
-                        var successwrite = await SecureStorageService()
-                            .writeValue('authToken', res['data']['authToken']);
-                        if (successwrite) {
-                          showSnackBar(context, 'Successful signup',
-                              function: () {}, label: 'get');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyHomePage()),
-                          );
-                        }
-                      } else {
-                        error = res['message'];
-                        setState(() {});
-                        showSnackBar(context, 'Signup failed');
-                        log('Failed to send Player ID to backend');
+                      if (payerid == null) {
+                        setState(() {
+                          _isLoading = false;
+                        });
+                        showSnackBar(
+                            context, 'Player ID not found. Please try again.');
+                        log('Player ID is null');
+                        return; // Stop further execution if playerId is null
                       }
-                      setState(() {
-                        _isLoading = false; // Hide loader
-                      });
+                      try {
+                        var res = await sendPlayerIdToBackend(
+                            payerid, widget.name, '+91' + numController.text);
+                        res = jsonDecode(res);
+
+                        if (res['status'] == 'success' &&
+                            res['error'] == false) {
+                          log('Player ID sent to backend');
+                          var successwrite = await SecureStorageService()
+                              .writeValue(
+                                  'authToken', res['data']['authToken']);
+                          if (successwrite) {
+                            showSnackBar(context, 'Successful signup',
+                                function: () {}, label: 'get');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const MyHomePage()),
+                            );
+                          }
+                        } else {
+                          error = res['message'];
+                          setState(() {});
+                          showSnackBar(context, 'Signup failed');
+                          log('Failed to send Player ID to backend');
+                        }
+                      } catch (e) {
+                        log('Error: $e');
+                        showSnackBar(
+                            context, 'An error occurred. Please try again.');
+                      } finally {
+                        setState(() {
+                          _isLoading = false; // Hide loader
+                        });
+                      }
                     } else {
                       // If not valid, show a snackbar or an error message
                       showSnackBar(
                           context, 'Please enter a valid phone number');
                     }
-                    if (_isLoading)
-                      Center(
-                        child: CircularProgressIndicator(),
-                      );
+                    
                   },
-                ),
+                ): CircularProgressIndicator(), 
               ),
             ),
           ],

@@ -46,17 +46,20 @@ class SecureStorageService {
       return await _storage.containsKey(key: key);
     } catch (e) {
       // Handle any exceptions here
-      throw Exception("Error checking key existence: $e");
+      return false;
+      // throw Exception("Error checking key existence: $e");
     }
   }
 
   // Delete all keys and values from secure storage
-  Future<void> deleteAll() async {
+  Future<bool> deleteAll() async {
     try {
       await _storage.deleteAll();
+      return true;
     } catch (e) {
       // Handle any exceptions here
-      throw Exception("Error deleting all values: $e");
+      return false;
+      // throw Exception("Error deleting all values: $e");
     }
   }
 }

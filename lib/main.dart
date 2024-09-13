@@ -6,11 +6,9 @@ import 'dart:developer';
 
 var player;
 void main() {
-  // OneSignal.initialize("87f41fe5-b08d-45b4-83e7-dbfb320a787f");
   WidgetsFlutterBinding.ensureInitialized();
   log('ebnabled');
   OneSignal.shared.setAppId('87f41fe5-b08d-45b4-83e7-dbfb320a787f');
-
   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
     log('Notification permission: ' + (accepted ? 'granted' : 'denied'));
   });
@@ -63,25 +61,15 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        primarySwatch: Colors.blue,
+        
       ),
       home: const SplashScreen(),
     );
   }
 }
-void showSnackBar(BuildContext context, String message, {Function()? function, String? label}) {
-  final snackBar = SnackBar(
-    content: Text(message),
-    duration: const Duration(seconds: 2),  // Duration the SnackBar will be visible
-    backgroundColor: Colors.black,         // Background color of the SnackBar
-    action: label != null
-        ? SnackBarAction(
-            label: label,                    // Action label
-            onPressed: function ?? () {},    // Action function or a no-op function
-          )
-        : null,                              // No action if label is null
-  );
+
 
   // Using ScaffoldMessenger to show the SnackBar
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
-}
+  // void showSnackBar(BuildContext context, SnackBar snackBar) {
+  //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  // }
