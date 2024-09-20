@@ -14,11 +14,6 @@ class MyNamePage extends StatefulWidget {
 class _MyHomePageState extends State<MyNamePage> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
-  
-
-  // Future<void> namePush(){
-  //   await OneSignal.shared.setAppId();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +24,13 @@ class _MyHomePageState extends State<MyNamePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      //backgroundColor: Colors.white,
+      
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.start,
@@ -55,11 +50,11 @@ class _MyHomePageState extends State<MyNamePage> {
                 ),
               ),
             ])),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Container(
-              padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -103,9 +98,7 @@ class _MyHomePageState extends State<MyNamePage> {
                               MyNumPage(userName: nameController.text),
                         ),
                       );
-                    } else {
-                      
-                    }
+                    } else {}
                   },
                 ),
               ),

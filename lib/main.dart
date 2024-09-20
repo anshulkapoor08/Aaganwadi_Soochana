@@ -10,20 +10,18 @@ void main() {
   log('ebnabled');
   OneSignal.shared.setAppId('87f41fe5-b08d-45b4-83e7-dbfb320a787f');
   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
-    log('Notification permission: ' + (accepted ? 'granted' : 'denied'));
+    log('Notification permission: ${accepted ? 'granted' : 'denied'}');
   });
   try {
-    OneSignal.shared.getDeviceState().then((deviceState) async{
+    OneSignal.shared.getDeviceState().then((deviceState) async {
       if (deviceState != null) {
         String playerId = deviceState.userId!;
         player = playerId;
-        if( await SecureStorageService().writeValue('playerId', playerId)){
-          log('Player ID: ' + playerId);
-        }
-        else{
+        if (await SecureStorageService().writeValue('playerId', playerId)) {
+          log('Player ID: $playerId');
+        } else {
           log('Failed to write Player ID to storage');
         }
-        
       }
     });
   } catch (er) {
@@ -41,8 +39,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final bool _requireConsent = false;
-
   @override
   void initState() {
     super.initState();
@@ -53,7 +49,6 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,15 +56,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        
       ),
       home: const SplashScreen(),
     );
   }
 }
-
-
-  // Using ScaffoldMessenger to show the SnackBar
-  // void showSnackBar(BuildContext context, SnackBar snackBar) {
-  //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  // }

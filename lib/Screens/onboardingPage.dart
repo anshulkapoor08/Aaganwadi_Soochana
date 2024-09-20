@@ -1,12 +1,8 @@
-
-
 import 'package:aaganwadi_soochna/Screens/namePage.dart';
 import 'package:aaganwadi_soochna/Widgets/button.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class GetStarted extends StatefulWidget {
   const GetStarted({super.key});
@@ -29,13 +25,15 @@ class _GetStartedState extends State<GetStarted> {
     ));
     return Scaffold(
       backgroundColor: whitecolor,
-      body: ImageCarouselSlider(),
+      body: const ImageCarouselSlider(),
     );
   }
 }
 
 @override
 class ImageCarouselSlider extends StatefulWidget {
+  const ImageCarouselSlider({super.key});
+
   @override
   _ImageCarouselSliderState createState() => _ImageCarouselSliderState();
 }
@@ -51,9 +49,9 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
   @override
   Widget build(BuildContext context) {
     return Padding(
+      
       padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.1,
-          bottom: 50),
+          top: MediaQuery.of(context).size.height * 0.1, bottom: 50),
       child: Column(
         children: [
           const Text(
@@ -85,9 +83,8 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
                   viewportFraction: 1.0,
                   initialPage: 0,
                   autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 3),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  
+                  autoPlayInterval: const Duration(seconds: 3),
+                  autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   onPageChanged: (value, _) {
                     setState(() {
                       _currentPage = value;
@@ -107,28 +104,32 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
               ),
             ),
           ),
-          //SizedBox(height: 10.0),
           buildCarouselIndicator(),
-          
           Padding(
-            padding:
-                EdgeInsets.only(top: 80),
+            padding: const EdgeInsets.only(top: 80),
             child: RoundButton(
               title: 'Login',
-              onTap: () {
-                
-              },
+              onTap: () {},
             ),
           ),
           const SizedBox(height: 20),
           TextButton(
-            onPressed: (){
+            onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MyNamePage()),
-                );
-            }, child: const Text('Sign Up', style: TextStyle(color: Colors.black, fontSize: 16, fontFamily: 'Gilroy', fontWeight: FontWeight.bold),),)
-        ], 
+                context,
+                MaterialPageRoute(builder: (context) => const MyNamePage()),
+              );
+            },
+            child: const Text(
+              'Sign Up',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Gilroy',
+                  fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -139,7 +140,7 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
         Container(
           width: i == _currentPage ? 8.0 : 5.0,
           height: i == _currentPage ? 8.0 : 5.0,
-          margin: EdgeInsets.symmetric(horizontal: 5.0),
+          margin: const EdgeInsets.symmetric(horizontal: 5.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: i == _currentPage ? Colors.black : Colors.grey,

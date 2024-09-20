@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'package:aaganwadi_soochna/Screens/onboardingPage.dart';
+
 import 'package:aaganwadi_soochna/View/authValidator.dart';
 import 'package:flutter/material.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void initState() {
-   
     super.initState();
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
@@ -29,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen>
       );
     });
   }
-  
+
   @override
   void dispose() {
     controller.dispose();
@@ -56,14 +54,13 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                   builder: (BuildContext context, Widget? child) {
                     return Transform.scale(
-                      scale: 1.0 + (controller.value * 0.5), 
+                      scale: 1.0 + (controller.value * 0.5),
                       child: child,
                     );
                   }),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.08,
               ),
-              
             ],
           ),
         ),

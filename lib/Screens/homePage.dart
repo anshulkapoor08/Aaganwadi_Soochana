@@ -1,7 +1,7 @@
 import 'package:aaganwadi_soochna/Screens/profile.dart';
-import 'package:aaganwadi_soochna/View/authValidator.dart';
-import 'package:aaganwadi_soochna/View/secureStorage.dart';
+import 'package:aaganwadi_soochna/utilities/colors.dart';
 import 'package:flutter/material.dart';
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -12,54 +12,40 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications', style: TextStyle(
-                      fontFamily: 'Gilroy',
-                      // fontWeight: FontWeight.w900,
-                      fontSize: 30),),
+        title: const Text(
+          'Notifications',
+          style: TextStyle(fontFamily: 'Gilroy', fontSize: 25),
+        ),
         centerTitle: true,
-         actions: [
+        backgroundColor: AppColors.whiteColor,
+        elevation: 2,
+        actions: [
           Padding(
-          padding:const EdgeInsets.symmetric(horizontal: 8.0),
-           child: IconButton(
-            icon: Icon(Icons.account_circle, size: 35,), 
-            onPressed: () {
-              
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
-              
-            },
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            
+            child: IconButton(
+          icon: Icon(Icons.message, size: 30,color: AppColors.blackColor,),
+          onPressed: () {
+            
+          },
+        ),
           ),
         ],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+              icon: Icon(
+                Icons.account_circle,
+                size: 30,color: AppColors.blackColor,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen()),
+                );
+              },
+            ),
       ),
-      // body: Center(
-      //   child: Column(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       Text(
-      //         'Welcome to Jan Suvidha',
-      //         style: TextStyle(fontSize: 20),
-      //       ),
-      //       ElevatedButton(onPressed: (){
-      //         SecureStorageService().deleteAll();
-      //           Navigator.pushReplacement(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => Validate()),
-      //           );
-      //       }, child: Text('Logout'))
-      //     ],
-      //   ),
-      // ),
       
     );
   }
