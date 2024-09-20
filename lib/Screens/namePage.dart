@@ -14,6 +14,7 @@ class MyNamePage extends StatefulWidget {
 class _MyHomePageState extends State<MyNamePage> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+  
 
   // Future<void> namePush(){
   //   await OneSignal.shared.setAppId();
@@ -70,6 +71,7 @@ class _MyHomePageState extends State<MyNamePage> {
                         labelText: 'Name',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(color: Colors.black),
                         ),
                       ),
                       validator: (value) {
@@ -98,7 +100,7 @@ class _MyHomePageState extends State<MyNamePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              MyNumPage(name: nameController.text),
+                              MyNumPage(userName: nameController.text),
                         ),
                       );
                     } else {

@@ -62,4 +62,11 @@ class SecureStorageService {
       // throw Exception("Error deleting all values: $e");
     }
   }
+
+  Future<void> storeUserData(String name, String phoneNumber) async {
+  await _storage.write(key: 'name', value: name);
+  await _storage.write(key: 'phoneNumber', value: phoneNumber);
+  // Optionally store a profile image URL or path
+  await _storage.write(key: 'profileImage', value: 'assets/profile.jpg');
+}
 }

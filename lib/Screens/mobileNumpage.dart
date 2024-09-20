@@ -9,8 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class MyNumPage extends StatefulWidget {
-  final String name;
-  const MyNumPage({required this.name});
+  final String userName;
+  const MyNumPage({required this.userName});
 
   @override
   State<MyNumPage> createState() => _NamePageState();
@@ -21,11 +21,12 @@ class _NamePageState extends State<MyNumPage> {
   final _formKey = GlobalKey<FormState>();
   final numController = TextEditingController();
   var error = '';
+  String userPhone = '';
 
   @override
   void initState() {
     super.initState();
-    print(widget.name);
+    print(widget.userName);
   }
 
   @override
@@ -131,7 +132,7 @@ class _NamePageState extends State<MyNumPage> {
                       }
                       try {
                         var res = await sendPlayerIdToBackend(
-                            payerid, widget.name, '+91' + numController.text);
+                            payerid, widget.userName, '+91' + numController.text);
                         res = jsonDecode(res);
 
                         if (res['status'] == 'success' &&
